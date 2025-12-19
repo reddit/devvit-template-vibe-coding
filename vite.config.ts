@@ -8,6 +8,6 @@ export default defineConfig({
     react(),
     tailwind(),
     // @ts-expect-error - due to using npm link for demo
-    devvit({}),
+    devvit(),
   ],
 });

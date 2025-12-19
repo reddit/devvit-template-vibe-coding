@@ -1,5 +1,5 @@
 import { initTRPC } from '@trpc/server';
-import { transformer } from '../shared/transformer';
+import { transformer } from '../transformer';
 import { Context } from './context';
 import { context, reddit, redis } from '@devvit/web/server';
 

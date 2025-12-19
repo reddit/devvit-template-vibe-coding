@@ -5,14 +5,16 @@
     "dir": "dist/client",
     "entrypoints": {
       "default": {
-        "entry": "src/client/index.html",
         "inline": true,
-        "height": "tall"
+        "entry": "src/splash.html"
+      },
+      "game": {
+        "entry": "src/game.html"
       }
     }
   },
   "media": {
-    "dir": "assets"
+    "dir": "public"
   },
   "server": {
     "dir": "dist/server",
