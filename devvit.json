@@ -5,7 +5,7 @@
     "dir": "dist/client",
     "entrypoints": {
       "default": {
-        "entry": "index.html",
+        "entry": "src/client/index.html",
         "inline": true,
         "height": "tall"
       }
@@ -32,15 +32,15 @@
   "permissions": {
     "reddit": {
       "enable": true,
-      "asUser": [
-        "SUBMIT_POST",
-        "SUBMIT_COMMENT",
-        "SUBSCRIBE_TO_SUBREDDIT"
-      ]
+      "asUser": ["SUBMIT_POST", "SUBMIT_COMMENT", "SUBSCRIBE_TO_SUBREDDIT"]
     }
   },
   "triggers": {
     "onAppInstall": "/internal/triggers/on-app-install"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite"
   },
   "dev": {
     "subreddit": "devvit_exp_1_dev"

@@ -35,6 +35,7 @@ export const appRouter = t.router({
   }),
   counter: t.router({
     increment: publicProcedure.mutation(async () => {
+      console.log('incrementing count');
       const { postId } = context;
       return {
         count: await redis.incrBy('count', 1),
@@ -43,6 +44,7 @@ export const appRouter = t.router({
       };
     }),
     decrement: publicProcedure.mutation(async () => {
+      console.log('decrementing count');
       const { postId } = context;
       return {
         count: await redis.incrBy('count', -1),
