@@ -46,12 +46,8 @@
 
     "tsBuildInfoFile": "./dist/types/tsconfig.tsbuildinfo",
 
-    "customConditions": ["browser"],
-
-    "paths": {
-      "~/*": ["./src/*"]
-    }
+    "customConditions": ["browser"]
   },
-  "include": ["**/*", "**/*.json", "vite.config.ts", "vitest.config.ts"],
+  "include": ["src/**/*", "vite.config.ts", "vitest.config.ts"],
   "exclude": ["dist"]
 }
