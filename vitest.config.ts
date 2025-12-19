@@ -3,6 +3,10 @@ import { playwright } from '@vitest/browser-playwright';
 
 export default defineConfig({
   test: {
+    // Needed due to the custom conditions within devvit web
+    typecheck: {
+      enabled: false,
+    },
     reporters: ['dot'],
     coverage: {
       enabled: true,
@@ -13,13 +17,15 @@ export default defineConfig({
       {
         test: {
           name: 'server',
-          include: ['src/api/**/*.test.ts'],
+          include: ['src/server/**/*.test.ts'],
           environment: 'node',
         },
       },
       {
         test: {
           name: 'client',
+          include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+          exclude: ['src/server/**/*'],
           browser: {
             enabled: true,
             provider: playwright(),

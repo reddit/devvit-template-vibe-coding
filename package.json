@@ -10,6 +10,7 @@
     "dev": "devvit playtest",
     "postinstall": "npm run build",
     "launch": "npm run build && npm run deploy && devvit publish",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
     "login": "devvit login",
     "prettier": "prettier-package-json --write ./package.json && prettier --write .",
     "test": "vitest run",
@@ -36,6 +37,7 @@
     "@devvit/shared-types": "file:../../devvit2/packages/shared-types",
     "@devvit/splash": "file:../../devvit2/packages/splash",
     "@devvit/start": "file:../../src/devvit/packages/start",
+    "@devvit/test": "file:../../devvit2/packages/test",
     "@devvit/web": "file:../../devvit2/packages/web",
     "@hono/node-server": "1.19.5",
     "@hono/trpc-server": "0.4.0",
@@ -73,6 +75,7 @@
     "prettier-plugin-tailwindcss": "0.7.2",
     "tailwindcss": "4.1.18",
     "typescript": "5.8.2",
+    "typescript-eslint": "8.50.0",
     "vite": "7.3.0",
     "vitest": "4.0.16"
   }

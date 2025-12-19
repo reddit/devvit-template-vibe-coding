@@ -18,7 +18,8 @@ export const App = () => {
   };
 
   useEffect(() => {
-    fetchInit();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchInit();
   }, []);
 
   const [loading, setLoading] = useState(false);
