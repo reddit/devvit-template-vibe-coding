@@ -8,13 +8,13 @@ menu.post('/post-create', async (c) => {
   try {
     const post = await createPost();
 
-    c.json({
+    return c.json({
       navigateTo: `https://reddit.com/r/${context.subredditName}/comments/${post.id}`,
     });
   } catch (error) {
     console.error(`Error creating post: ${error}`);
     c.status(400);
-    c.json({
+    return c.json({
       status: 'error',
       message: 'Failed to create post',
     });

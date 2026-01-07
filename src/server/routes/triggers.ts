@@ -8,14 +8,14 @@ triggers.post('/on-app-install', async (c) => {
   try {
     const post = await createPost();
 
-    c.json({
+    return c.json({
       status: 'success',
       message: `Post created in subreddit ${context.subredditName} with id ${post.id}`,
     });
   } catch (error) {
     console.error(`Error creating post: ${error}`);
     c.status(400);
-    c.json({
+    return c.json({
       status: 'error',
       message: 'Failed to create post',
     });
