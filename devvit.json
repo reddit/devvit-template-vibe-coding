@@ -1,6 +1,6 @@
 {
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
-  "name": "devvit-exp-1",
+  "name": "<% name %>",
   "post": {
     "dir": "dist/client",
     "entrypoints": {
@@ -24,7 +24,7 @@
     "items": [
       {
         "label": "Create a new post",
-        "description": "create-my-app",
+        "description": "<% name %>",
         "location": "subreddit",
         "forUserType": "moderator",
         "endpoint": "/internal/menu/post-create"
