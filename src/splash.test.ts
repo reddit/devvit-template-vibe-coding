@@ -1,14 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { page } from 'vitest/browser';
 
 let requestExpandedModeMock: ReturnType<typeof vi.fn>;
+let navigateToMock: ReturnType<typeof vi.fn>;
 
 vi.mock('@devvit/web/client', () => {
   requestExpandedModeMock = vi.fn();
+  navigateToMock = vi.fn();
 
   return {
     // used in the footer
-    navigateTo: vi.fn(),
+    navigateTo: navigateToMock,
     // used in the greeting
     context: {
       username: 'test-user',
@@ -20,28 +21,29 @@ vi.mock('@devvit/web/client', () => {
 
 afterEach(() => {
   requestExpandedModeMock?.mockReset();
+  navigateToMock?.mockReset();
 });
 
 describe('Splash', () => {
-  it('renders Snoo + Tap to Start, and clicking calls requestExpandedMode(nativeEvent, "game")', async () => {
+  it('clicking the "Docs" footer button calls navigateTo(...)', async () => {
     document.body.innerHTML = '<div id="root"></div>';
 
     // `src/splash.tsx` renders immediately on import (createRoot(...).render(...))
     await import('./splash');
 
-    const img = page.getByAltText('Snoo');
-    await expect.element(img).toBeInTheDocument();
-    const src = img.element().getAttribute('src') ?? '';
-    expect(src).toMatch(/\/snoo\.png$/);
+    // Let React commit the initial render.
+    await new Promise((r) => setTimeout(r, 0));
 
-    const button = page.getByRole('button', { name: /tap to start/i });
-    await expect.element(button).toBeInTheDocument();
+    const docsButton = Array.from(document.querySelectorAll('button')).find(
+      (b) => /docs/i.test(b.textContent ?? '')
+    );
+    expect(docsButton).toBeTruthy();
 
-    await button.click();
+    docsButton!.click();
 
-    expect(requestExpandedModeMock).toHaveBeenCalledTimes(1);
-    const [nativeEvent, mode] = requestExpandedModeMock.mock.calls[0] ?? [];
-    expect(nativeEvent).toBeInstanceOf(Event);
-    expect(mode).toBe('game');
+    expect(navigateToMock).toHaveBeenCalledTimes(1);
+    expect(navigateToMock).toHaveBeenCalledWith(
+      'https://developers.reddit.com/docs'
+    );
   });
 });

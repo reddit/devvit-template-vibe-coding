@@ -52,7 +52,11 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.json'],
+        // Order matters: if a file is included in multiple projects, typescript-eslint
+        // will pick the first matching tsconfig. Our root tsconfig uses
+        // `customConditions: ["browser"]` (client), while `src/server/tsconfig.json`
+        // is the correct config for server files importing `@devvit/web/server`.
+        project: ['./src/server/tsconfig.json', './tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },
