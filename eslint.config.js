@@ -13,6 +13,10 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2023,
       globals: globals.node,
+      parserOptions: {
+        project: ['./tools/tsconfig.server.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
   {
@@ -22,6 +26,10 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2023,
       globals: globals.browser,
+      parserOptions: {
+        project: ['./tools/tsconfig.client.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -52,11 +60,6 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        // Order matters: if a file is included in multiple projects, typescript-eslint
-        // will pick the first matching tsconfig. Our root tsconfig uses
-        // `customConditions: ["browser"]` (client), while `src/server/tsconfig.json`
-        // is the correct config for server files importing `@devvit/web/server`.
-        project: ['./src/server/tsconfig.json', './tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },

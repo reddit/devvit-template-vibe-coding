@@ -1,53 +1,7 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig.json",
-
-  "compilerOptions": {
-    // Enable incremental builds.
-    "composite": true,
-
-    // Maximize type checking.
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "strict": true,
-
-    "types": [], // Projects add types needed.
-
-    // Improve compatibility with compilers that aren't type system aware.
-    "isolatedModules": true,
-
-    // Use ESM.
-    "esModuleInterop": true,
-
-    // Allow JSON type-checking and imports.
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-
-    // Assume library types are checked and compatible.
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-
-    "sourceMap": true,
-
-    "target": "ES2022",
-
-    "lib": ["DOM", "ES2023", "esnext.disposable"],
-
-    "outDir": "./dist/types",
-
-    "jsx": "react-jsx",
-
-    "tsBuildInfoFile": "./dist/types/tsconfig.tsbuildinfo",
-
-    "customConditions": ["browser"]
-  },
-  "include": ["src/**/*", "vite.config.ts", "vitest.config.ts"],
-  "exclude": ["dist"]
+  "files": [],
+  "references": [
+    { "path": "./tools/tsconfig.client.json" },
+    { "path": "./tools/tsconfig.server.json" }
+  ]
 }
