@@ -42,6 +42,6 @@
   },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "vite"
+    "build": "vite build"
   }
 }
