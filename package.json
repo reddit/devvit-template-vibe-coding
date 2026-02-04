@@ -1,11 +1,10 @@
 {
   "private": true,
-  "name": "devvit-exp-1",
+  "name": "<% name %>",
   "version": "0.0.0",
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "vite build",
     "deploy": "npm run type-check && npm run lint && npm run test && devvit upload",
     "dev": "devvit playtest",
@@ -17,15 +16,15 @@
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/start": "0.12.9-next-2026-01-13-18-29-17-b6cd561bc.0",
-    "@devvit/test": "0.12.9-next-2026-01-13-18-29-17-b6cd561bc.0",
-    "@devvit/web": "0.12.9-next-2026-01-13-18-29-17-b6cd561bc.0",
+    "@devvit/start": "0.12.11-next-2026-01-29-18-55-40-702aa5dd5.0",
+    "@devvit/test": "0.12.11-next-2026-01-29-18-55-40-702aa5dd5.0",
+    "@devvit/web": "0.12.11-next-2026-01-29-18-55-40-702aa5dd5.0",
     "@hono/node-server": "1.19.8",
     "@hono/trpc-server": "0.4.2",
     "@trpc/client": "11.8.1",
     "@trpc/server": "11.8.1",
     "clsx": "2.1.1",
-    "devvit": "0.12.9-next-2026-01-13-18-29-17-b6cd561bc.0",
+    "devvit": "0.12.11-next-2026-01-29-18-55-40-702aa5dd5.0",
     "hono": "4.11.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
