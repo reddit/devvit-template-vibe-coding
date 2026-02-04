@@ -1,5 +1,5 @@
 import { initTRPC } from '@trpc/server';
-import { transformer } from '../transformer';
+import { transformer } from '../shared/transformer';
 import { Context } from './context';
 import { context, reddit } from '@devvit/web/server';
 import { countDecrement, countGet, countIncrement } from './core/count';
