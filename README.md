@@ -10,7 +10,7 @@ A starter to build web applications on Reddit's developer platform
 - [Hono](https://hono.dev/): For backend logic
 - [TRPC](https://trpc.io/): Type safe RPCs from server to client
 - [Tailwind](https://tailwindcss.com/): For styles
-- [Typescript](https://www.typescriptlang.org/): For type safety
+- [TypeScript](https://www.typescriptlang.org/): For type safety
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ A starter to build web applications on Reddit's developer platform
 - `npm run deploy`: Uploads a new version of your app
 - `npm run launch`: Publishes your app for review
 - `npm run login`: Logs your CLI into Reddit
-- `npm run check`: Type checks, lints, and prettifies your app
+- `npm run type-check`: Type checks, lints, and prettifies your app
 
 ## MCP Integration
 

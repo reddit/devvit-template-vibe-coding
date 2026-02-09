@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { navigateTo } from '@devvit/web/client';
 import { trpc } from './trpc';
 import type { inferRouterOutputs } from '@trpc/server';
-import type { AppRouter } from './server/trpc';
+import type { AppRouter } from '../server/trpc';
 
 type RouterOutputs = inferRouterOutputs<AppRouter>;
 
@@ -53,7 +53,7 @@ export const App = () => {
         <p className="text-center text-base text-gray-600">
           Edit{' '}
           <span className="rounded bg-[#e5ebee] px-1 py-0.5">
-            src/client/game/App.tsx
+            src/client/game.tsx
           </span>{' '}
           to get started.
         </p>
