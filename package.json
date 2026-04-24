@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@devvit/start": "0.12.12",
-    "@devvit/test": "0.12.12",
+    "@devvit/test": "0.12.20",
     "@devvit/web": "0.12.12",
     "@hono/node-server": "1.19.8",
     "@hono/trpc-server": "0.4.2",
