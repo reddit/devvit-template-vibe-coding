@@ -45,7 +45,7 @@
     "eslint": "10.5.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.2",
-    "prettier": "3.8.4",
+    "prettier": "3.9.3",
     "prettier-package-json": "2.8.0",
     "prettier-plugin-tailwindcss": "0.8.0",
     "tailwindcss": "4.3.1",
