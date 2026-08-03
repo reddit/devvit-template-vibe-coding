@@ -6,14 +6,15 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "deploy": "npm run type-check && npm run lint && npm run test && devvit upload",
+    "deploy": "npm run test:types && npm run lint && npm run test:unit && devvit upload",
     "dev": "devvit playtest",
     "launch": "npm run deploy && devvit publish",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "login": "devvit login",
     "prettier": "prettier-package-json --write ./package.json && prettier --write .",
-    "test": "vitest run",
-    "type-check": "tsc --build"
+    "test": "npm run test:types && npm run lint && npm run test:unit && npm run build",
+    "test:types": "tsc --build",
+    "test:unit": "vitest run"
   },
   "engines": {
     "node": ">=22.20.0"
@@ -45,6 +46,7 @@
     "eslint": "10.8.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.3",
+    "globals": "17.8.0",
     "prettier": "3.9.6",
     "prettier-package-json": "2.8.0",
     "prettier-plugin-tailwindcss": "0.8.1",
