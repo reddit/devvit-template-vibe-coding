@@ -10,6 +10,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # @devvit/test pulls in redis-memory-server, which by default downloads
+      # and compiles Redis (plus modules) from source on install and on first
+      # test run. That source build is slow and unreliable in CI. Point it at
+      # the prebuilt redis-server we install below: this both skips the
+      # install-time compile and makes the tests use the system binary.
+      REDISMS_SYSTEM_BINARY: /usr/bin/redis-server
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.0
@@ -17,6 +24,8 @@ jobs:
         uses: actions/setup-node@v6.4.0
         with:
           node-version: 22.20.0
+      - name: Install Redis
+        run: sudo apt-get update && sudo apt-get install -y redis-server
       - name: Install Dependencies
         run: npm install --no-fund
       - parallel:
