@@ -23,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6.4.0
         with:
-          node-version: 22.20.0
+          node-version: 24.18.0
       - name: Install Redis
         run: sudo apt-get update && sudo apt-get install -y redis-server
       - name: Install Dependencies
