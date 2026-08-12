@@ -20,6 +20,7 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
+    "@devvit/analytics": "0.13.11",
     "@devvit/start": "0.13.11",
     "@devvit/test": "0.13.11",
     "@devvit/web": "0.13.11",

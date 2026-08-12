@@ -1,4 +1,5 @@
 import { initTRPC } from '@trpc/server';
+import { telemetry } from '@devvit/analytics/server/reddit';
 import { transformer } from '../shared/transformer';
 import { Context } from './context';
 import { context, reddit } from '@devvit/web/server';
@@ -20,7 +21,40 @@ const t = initTRPC.context<Context>().create({
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
+const counterInput = z
+  .object({
+    amount: z.number().optional(),
+    journeyId: z.string().min(1).optional(),
+  })
+  .optional();
+
+const recordCounterProgress = async (
+  journeyId: string | undefined,
+  action: 'increment' | 'decrement'
+) => {
+  if (!journeyId) return;
+
+  try {
+    await telemetry.journeyProgress({
+      journeyId,
+      progress: 0.5,
+      action,
+      actionDetails: 'counter',
+    });
+  } catch (error) {
+    console.warn(`Failed to record ${action} journey progress.`, error);
+  }
+};
+
 export const appRouter = t.router({
+  journeys: t.router({
+    appReady: publicProcedure.mutation(async () => {
+      return await telemetry.appReady();
+    }),
+    start: publicProcedure.mutation(async () => {
+      return await telemetry.startJourney();
+    }),
+  }),
   init: t.router({
     get: publicProcedure.query(async () => {
       const [count, username] = await Promise.all([
@@ -37,21 +71,27 @@ export const appRouter = t.router({
   }),
   counter: t.router({
     increment: publicProcedure
-      .input(z.number().optional())
+      .input(counterInput)
       .mutation(async ({ input }) => {
         const { postId } = context;
+        const count = await countIncrement(input?.amount);
+        await recordCounterProgress(input?.journeyId, 'increment');
+
         return {
-          count: await countIncrement(input),
+          count,
           postId,
           type: 'increment',
         };
       }),
     decrement: publicProcedure
-      .input(z.number().optional())
+      .input(counterInput)
       .mutation(async ({ input }) => {
         const { postId } = context;
+        const count = await countDecrement(input?.amount);
+        await recordCounterProgress(input?.journeyId, 'decrement');
+
         return {
-          count: await countDecrement(input),
+          count,
           postId,
           type: 'decrement',
         };

@@ -2,10 +2,24 @@ import './index.css';
 
 import { navigateTo } from '@devvit/web/client';
 import { context, requestExpandedMode } from '@devvit/web/client';
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
+import { setJourneyId } from './journeys';
+import { trpc } from './trpc';
+
+let hasReportedAppReady = false;
+let hasStartedJourney = false;
 
 export const Splash = () => {
+  useEffect(() => {
+    if (hasReportedAppReady) return;
+
+    hasReportedAppReady = true;
+    void trpc.journeys.appReady.mutate().catch((error: unknown) => {
+      console.warn('Failed to record app ready.', error);
+    });
+  }, []);
+
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center gap-4 bg-white dark:bg-gray-900">
       <img
@@ -28,28 +42,39 @@ export const Splash = () => {
       <div className="mt-5 flex items-center justify-center">
         <button
           className="flex h-10 w-auto cursor-pointer items-center justify-center rounded-full bg-[#d93900] px-4 text-white transition-colors hover:bg-[#c23300] dark:bg-orange-600 dark:hover:bg-orange-700"
-          onClick={(e) => requestExpandedMode(e.nativeEvent, 'game')}
+          onClick={async (e) => {
+            if (hasStartedJourney) return;
+
+            hasStartedJourney = true;
+            try {
+              const { journeyId } = await trpc.journeys.start.mutate();
+              setJourneyId(journeyId);
+            } catch (error) {
+              console.warn('Failed to start journey.', error);
+            }
+            requestExpandedMode(e.nativeEvent, 'game');
+          }}
         >
           Tap to Start
         </button>
       </div>
       <footer className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-3 text-[0.8em] text-gray-600 dark:text-gray-400">
         <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
+          className="cursor-pointer transition-colors hover:text-gray-900 dark:hover:text-white"
           onClick={() => navigateTo('https://developers.reddit.com/docs')}
         >
           Docs
         </button>
         <span className="text-gray-300 dark:text-gray-600">|</span>
         <button
-          className="cursor-pointer hover:text-gray-900dark:hover:text-white transition-colors"
+          className="hover:text-gray-900dark:hover:text-white cursor-pointer transition-colors"
           onClick={() => navigateTo('https://www.reddit.com/r/Devvit')}
         >
           r/Devvit
         </button>
         <span className="text-gray-300 dark:text-gray-600">|</span>
         <button
-          className="cursor-pointer hover:text-gray-900dark:hover:text-white transition-colors"
+          className="hover:text-gray-900dark:hover:text-white cursor-pointer transition-colors"
           onClick={() => navigateTo('https://discord.com/invite/R7yu2wh9Qz')}
         >
           Discord

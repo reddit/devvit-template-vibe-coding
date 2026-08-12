@@ -32,6 +32,7 @@
     ]
   },
   "permissions": {
+    "journeys": true,
     "reddit": {
       "enable": true,
       "asUser": ["SUBMIT_POST", "SUBMIT_COMMENT", "SUBSCRIBE_TO_SUBREDDIT"]

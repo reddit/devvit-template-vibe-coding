@@ -1,7 +1,23 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 let requestExpandedModeMock: ReturnType<typeof vi.fn>;
 let navigateToMock: ReturnType<typeof vi.fn>;
+let appReadyMock: ReturnType<typeof vi.fn>;
+let startJourneyMock: ReturnType<typeof vi.fn>;
+
+vi.mock('./trpc', () => {
+  appReadyMock = vi.fn().mockResolvedValue(undefined);
+  startJourneyMock = vi.fn().mockResolvedValue({ journeyId: 'journey-id' });
+
+  return {
+    trpc: {
+      journeys: {
+        appReady: { mutate: appReadyMock },
+        start: { mutate: startJourneyMock },
+      },
+    },
+  };
+});
 
 vi.mock('@devvit/web/client', () => {
   requestExpandedModeMock = vi.fn();
@@ -19,20 +35,29 @@ vi.mock('@devvit/web/client', () => {
   };
 });
 
-afterEach(() => {
-  requestExpandedModeMock?.mockReset();
-  navigateToMock?.mockReset();
-});
-
 describe('Splash', () => {
-  it('clicking the "Docs" footer button calls navigateTo(...)', async () => {
+  it('reports app ready and starts a journey when the user taps to start', async () => {
     document.body.innerHTML = '<div id="root"></div>';
+    sessionStorage.clear();
 
-    // `src/splash.tsx` renders immediately on import (createRoot(...).render(...))
     await import('./splash');
+    await vi.waitFor(() => expect(appReadyMock).toHaveBeenCalledTimes(1));
 
-    // Let React commit the initial render.
-    await new Promise((r) => setTimeout(r, 0));
+    const startButton = Array.from(document.querySelectorAll('button')).find(
+      (button) => /tap to start/i.test(button.textContent ?? '')
+    );
+    expect(startButton).toBeTruthy();
+
+    startButton!.click();
+    startButton!.click();
+
+    expect(startJourneyMock).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(sessionStorage.getItem('devvit.telemetry.journeyId')).toBe(
+        'journey-id'
+      );
+    });
+    expect(requestExpandedModeMock).toHaveBeenCalledTimes(1);
 
     const docsButton = Array.from(document.querySelectorAll('button')).find(
       (b) => /docs/i.test(b.textContent ?? '')
