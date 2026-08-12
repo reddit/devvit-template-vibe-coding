@@ -3,6 +3,7 @@ import './index.css';
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { navigateTo } from '@devvit/web/client';
+import { getJourneyId } from './journeys';
 import { trpc } from './trpc';
 import type { inferRouterOutputs } from '@trpc/server';
 import type { AppRouter } from '../server/trpc';
@@ -27,14 +28,18 @@ export const App = () => {
 
   const increment = async () => {
     setLoading(true);
-    const result = await trpc.counter.increment.mutate();
+    const result = await trpc.counter.increment.mutate({
+      journeyId: getJourneyId(),
+    });
     setInit((prev) => (prev ? { ...prev, count: result.count } : null));
     setLoading(false);
   };
 
   const decrement = async () => {
     setLoading(true);
-    const result = await trpc.counter.decrement.mutate();
+    const result = await trpc.counter.decrement.mutate({
+      journeyId: getJourneyId(),
+    });
     setInit((prev) => (prev ? { ...prev, count: result.count } : null));
     setLoading(false);
   };
@@ -79,21 +84,21 @@ export const App = () => {
       </div>
       <footer className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-3 text-[0.8em] text-gray-600 dark:text-gray-400">
         <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
+          className="cursor-pointer transition-colors hover:text-gray-900 dark:hover:text-white"
           onClick={() => navigateTo('https://developers.reddit.com/docs')}
         >
           Docs
         </button>
         <span className="text-gray-300 dark:text-gray-600">|</span>
         <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
+          className="cursor-pointer transition-colors hover:text-gray-900 dark:hover:text-white"
           onClick={() => navigateTo('https://www.reddit.com/r/Devvit')}
         >
           r/Devvit
         </button>
         <span className="text-gray-300 dark:text-gray-600">|</span>
         <button
-          className="cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors"
+          className="cursor-pointer transition-colors hover:text-gray-900 dark:hover:text-white"
           onClick={() => navigateTo('https://discord.com/invite/R7yu2wh9Qz')}
         >
           Discord
