@@ -29,6 +29,10 @@ updates:
         patterns:
           - "vite"
           - "@vitejs/*"
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
       tailwind:
         patterns:
           - "tailwindcss"
